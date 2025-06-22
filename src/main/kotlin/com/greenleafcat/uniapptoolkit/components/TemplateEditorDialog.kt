@@ -1,5 +1,6 @@
 package com.greenleafcat.uniapptoolkit.components
 
+import com.greenleafcat.uniapptoolkit.models.UniappRunConfiguration
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.components.JBLabel
@@ -23,13 +24,10 @@ class TemplateEditorDialog(project: Project, private val config: UniappRunConfig
     }
 
     override fun createCenterPanel(): JComponent {
-        return FormBuilder.createFormBuilder()
-            .addLabeledComponent(JBLabel("Name:"), nameField)
-            .addLabeledComponent(JBLabel("Type:"), typeComboBox)
-            .addLabeledComponent(JBLabel("Port:"), portField)
+        return FormBuilder.createFormBuilder().addLabeledComponent(JBLabel("Name:"), nameField)
+            .addLabeledComponent(JBLabel("Type:"), typeComboBox).addLabeledComponent(JBLabel("Port:"), portField)
             .addLabeledComponent(JBLabel("Command:"), commandField)
-            .addLabeledComponent(JBLabel("Working Directory:"), workingDirField)
-            .panel
+            .addLabeledComponent(JBLabel("Working Directory:"), workingDirField).panel
     }
 
     fun getConfiguration(): UniappRunConfiguration {

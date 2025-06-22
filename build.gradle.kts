@@ -16,6 +16,8 @@ repositories {
     }
 }
 
+
+
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html
 dependencies {
@@ -27,6 +29,7 @@ dependencies {
         // bundledPlugin("com.intellij.java")
     }
 }
+
 
 intellijPlatform {
     pluginConfiguration {
