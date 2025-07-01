@@ -1,0 +1,93 @@
+
+{
+  "$schema": "https://json.schemastore.org/web-types",
+  "framework": "vue",
+  "name": "uni-ui",
+  "version": "1.5.4",
+  "contributions": {
+    "html": {
+      "tags": [
+        {
+          "name": "uni-card",
+          "description": "卡片组件",
+          "doc-url": "https://uniapp.dcloud.net.cn/component/uniui/uni-card.html",
+          "attributes": [
+            {
+              "name": "title",
+              "description": "标题文字",
+              "type": "string"
+            },
+            {
+              "name": "sub-title",
+              "description": "副标题文字",
+              "type": "string"
+            },
+            {
+              "name": "extra",
+              "description": "额外信息",
+              "type": "string"
+            },
+            {
+              "name": "thumbnail",
+              "description": "缩略图",
+              "type": "string"
+            },
+            {
+              "name": "is-full",
+              "description": "内容通栏",
+              "type": "boolean"
+            },
+            {
+              "name": "is-shadow",
+              "description": "是否显示卡片阴影",
+              "type": "boolean"
+            },
+            {
+              "name": "shadow",
+              "description": "卡片阴影",
+              "type": "string"
+            },
+            {
+              "name": "border",
+              "description": "是否显示边框",
+              "type": "boolean"
+            },
+            {
+              "name": "margin",
+              "description": "外边距",
+              "type": "string"
+            },
+            {
+              "name": "spacing",
+              "description": "内边距",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "uni-section",
+          "description": "标题栏组件",
+          "doc-url": "https://uniapp.dcloud.net.cn/component/uniui/uni-section.html",
+          "attributes": [
+            {
+              "name": "type",
+              "description": "装饰类型",
+              "type": "string",
+              "values": ["line", "circle"]
+            },
+            {
+              "name": "title",
+              "description": "主标题",
+              "type": "string"
+            },
+            {
+              "name": "sub-title",
+              "description": "副标题",
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

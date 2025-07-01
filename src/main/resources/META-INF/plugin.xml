@@ -1,36 +1,30 @@
-<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+
 <idea-plugin>
-  <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
-  <id>com.greenleafcat.uniapptoolkit</id>
+    <id>com.greenleafcat.uniapptoolkit</id>
+    <name>uniapp-toolkit</name>
+    <vendor>michael jou</vendor>
 
-  <!-- Public plugin name should be written in Title Case.
-       Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-  <name>Uniapp-toolkit</name>
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.javascript.debugger</depends>
+    <depends>org.jetbrains.plugins.vue</depends>
 
-  <version>1.0.0</version>
+    <resource-bundle>messages.MyBundle</resource-bundle>
 
-  <description>
-    <![CDATA[
-      Uniapp Toolkit for WebStorm provides enhanced support for Uniapp development,
-      including code completion for UniUI components, run configurations, and environment management.
-    ]]>
-  </description>
-  <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-  <vendor url="http://greenleafcat.com">green leaf cat</vendor>
-  <depends>com.intellij.modules.platform</depends>
-  <depends>com.intellij.modules.web</depends>
-  <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
-       Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- 运行配置 -->
+        <configurationType implementation="com.greenleafcat.uniapptoolkit.run.UniAppRunConfigurationType"/>
+        <runConfigurationProducer implementation="com.greenleafcat.uniapptoolkit.run.producer.UniAppRunConfigurationProducer"/>
 
+        <!-- 设置页面 -->
+        <applicationConfigurable
+                parentId="tools"
+                instance="com.greenleafcat.uniapptoolkit.settings.UniAppSettingsConfigurable"
+                id="com.greenleafcat.uniapptoolkit.settings.UniAppSettingsConfigurable"
+                displayName="Uni-app Support"/>
 
-  <!-- Extension points defined by the plugin.
-       Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
-  <extensions defaultExtensionNs="com.intellij">
-    <action id="UniappToolkit.CreateRunConfig"
-      class="com.greenleafcat.uniapptoolkit.actions.CreateUniappRunConfigAction"></action>
-  </extensions>
-  <project-components>
-    <component implementation="com.greenleafcat.uniapptoolkit.services.RunConfigService"/>
-    <component implementation="com.greenleafcat.uniapptoolkit.services.EnvConfigService"/>
-  </project-components>
+        <!-- uni-ui 组件代码补全 -->
+        <webSymbols.web-types source="web-types.json"/>
+    </extensions>
+
 </idea-plugin>

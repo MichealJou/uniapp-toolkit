@@ -1,13 +1,16 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
 
+fun properties(key: String) = project.findProperty(key).toString()
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "2.1.0"
+    id("org.jetbrains.kotlin.jvm") version "1.9.23"
     id("org.jetbrains.intellij.platform") version "2.5.0"
+    id("org.jetbrains.changelog") version "2.2.0"
 }
 
-group = "com.greenleafcat"
-version = "1.0-SNAPSHOT"
+group = properties("pluginGroup")
+version = properties("pluginVersion")
 
 repositories {
     mavenCentral()
@@ -16,40 +19,65 @@ repositories {
     }
 }
 
-
-
-// Configure Gradle IntelliJ Plugin
-// Read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html
 dependencies {
     intellijPlatform {
-        create("IC", "2025.1")
+        create("WS", properties("platformVersion")) // 使用 properties 读取版本号
         testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
-
-        // Add necessary plugin dependencies for compilation here, example:
-        // bundledPlugin("com.intellij.java")
+        bundledPlugin("JavaScript")
+        bundledPlugin("NodeJS")
+        bundledPlugin("com.intellij.webcore")
     }
 }
-
 
 intellijPlatform {
     pluginConfiguration {
-        ideaVersion {
-            sinceBuild = "251"
+        name = properties("pluginName")
+        id = properties("pluginId")
+        description = properties("pluginDescription")
+//        changeNotes = changelog.run {
+//            getOrNull(properties("pluginVersion"))?.toHTML() ?: getLatest().toHTML()
+//        }
+        vendor {
+            name = properties("pluginVendorName")
+            email = properties("pluginVendorEmail")
+            url = properties("pluginVendorUrl")
         }
 
-        changeNotes = """
-      Initial version
-    """.trimIndent()
+        ideaVersion {
+            sinceBuild = properties("pluginSinceBuild")
+            untilBuild = properties("pluginUntilBuild")
+        }
     }
+
+    buildSearchableOptions = true
 }
 
 tasks {
-    // Set the JVM compatibility versions
-    withType<JavaCompile> {
-        sourceCompatibility = "21"
-        targetCompatibility = "21"
+    wrapper {
+        gradleVersion = properties("gradleVersion")
     }
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
+
+    patchPluginXml {
+        version = properties("pluginVersion")
+//        changeNotes = changelog.run {
+//            getOrNull(properties("pluginVersion"))?.toHTML() ?: getLatest().toHTML()
+//        }
     }
+
+    runIde {
+//        autoReloadPlugins = true
+    }
+
+    signPlugin {
+        certificateChainFile = file("certificates/chain.crt")
+        privateKeyFile = file("certificates/private.pem")
+        password = System.getenv("PRIVATE_KEY_PASSWORD")
+    }
+
+    publishPlugin {
+        token = System.getenv("PUBLISH_TOKEN")
+    }
+}
+kotlin {
+    jvmToolchain(17)
 }
